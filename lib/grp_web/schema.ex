@@ -14,6 +14,13 @@ defmodule GrpWeb.Schema do
       resolve &PostResolvers.list_posts/3
     end
 
+    @desc "Get posts details"
+    field :get_post_details, :post do
+      arg( :id, non_null(:id) )
+
+      resolve &PostResolvers.get_post/3
+    end
+
   end
 
 

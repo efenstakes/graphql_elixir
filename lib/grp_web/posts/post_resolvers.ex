@@ -8,4 +8,8 @@ defmodule GrpWeb.Posts.Resolvers do
     Grp.Content.create_post(%{ title: title, body: body })
   end
 
+  def get_post(_parent, %{ id: id }, _resolution) do
+    { :ok, Grp.Content.get_post(id) }
+  end
+
 end

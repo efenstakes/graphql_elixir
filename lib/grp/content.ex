@@ -37,6 +37,7 @@ defmodule Grp.Content do
   """
   def get_posts!(id), do: Repo.get!(Posts, id)
 
+  def get_post(id), do: Repo.get(Posts, id)
 
 
   def create_post(attrs \\ %{}) do
