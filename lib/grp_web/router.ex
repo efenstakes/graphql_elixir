@@ -1,12 +1,15 @@
 defmodule GrpWeb.Router do
   use GrpWeb, :router
 
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/api", GrpWeb do
+  scope "/api" do
     pipe_through :api
+
+    forward "/", Absinthe.Plug, schema: GrpWeb.Schema
   end
 
   # Enables LiveDashboard only for development
@@ -18,6 +21,9 @@ defmodule GrpWeb.Router do
   # as long as you are also using SSL (which you should anyway).
   if Mix.env() in [:dev, :test] do
     import Phoenix.LiveDashboard.Router
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+          schema: GrpWeb.Schema, interface: :advanced
 
     scope "/" do
       pipe_through [:fetch_session, :protect_from_forgery]
