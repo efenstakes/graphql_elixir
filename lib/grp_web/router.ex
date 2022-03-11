@@ -3,13 +3,17 @@ defmodule GrpWeb.Router do
 
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug( :accepts, ["json"] )
+    plug Plug.Parsers,
+          parsers: [:urlencoded, :multipart, :json],
+          pass: ["*/*"],
+          json_decoder: Jason
   end
 
   scope "/api" do
     pipe_through :api
 
-    forward "/", Absinthe.Plug, schema: GrpWeb.Schema
+    forward( "/", Absinthe.Plug, schema: GrpWeb.Schema )
   end
 
   # Enables LiveDashboard only for development
